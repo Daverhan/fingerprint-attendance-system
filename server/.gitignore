@@ -1,0 +1,7 @@
+# python
+__pycache__
+.venv
+.env
+
+# tailwindcss
+node_modules
