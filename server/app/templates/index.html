@@ -1,14 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../static/css/main.css" />
-    <title>Fingerprint Attendance System</title>
-  </head>
-  <body>
-    <header>
-      <h1 class="text-center text-2xl mt-2">Index Page</h1>
-    </header>
-  </body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}
+Fingerprint Attendance System
+{%endblock %}
+
+{% block header %}
+Organization Portal
+{% endblock %}
+
+{% block content %}
+<section class="flex flex-col items-center">
+  <form class="flex flex-col text-xl mt-4 items-center w-72">
+    <input placeholder="Username" type="text" name="username" id="username" autocomplete="username"
+      class="px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:border-transparent w-full" />
+    <input placeholder="Password" type="password" name="password" id="password"
+      class="mt-2 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:border-transparent w-full" />
+    <button
+      class="mt-4 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow w-full">
+      Organization Login
+    </button>
+  </form>
+  <button
+    class="mt-10 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow text-xl w-96">
+    Create an Organization
+  </button>
+</section>
+{% endblock %}
