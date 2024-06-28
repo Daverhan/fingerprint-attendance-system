@@ -5,25 +5,29 @@ from app.models.organization import Organization, Account
 authentication_bp = Blueprint('authentication', __name__)
 
 
-@authentication_bp.route('/', methods=['POST'])
+@authentication_bp.route('/', methods=['GET', 'POST'])
 def organization_login():
-    required_fields = ['username', 'password']
+    if request.method == 'GET':
+        return render_template('index.html')
 
-    request_form_data = {field: request.form.get(
-        field) for field in required_fields}
+    if request.method == 'POST':
+        required_fields = ['username', 'password']
 
-    if not all(request_form_data.get(field) for field in required_fields):
-        return render_template('index.html', error_message="Missing required fields")
+        request_form_data = {field: request.form.get(
+            field) for field in required_fields}
 
-    organization_account = db.session.query(Account).filter_by(
-        **{field: request_form_data[field] for field in required_fields}).first()
+        if not all(request_form_data.get(field) for field in required_fields):
+            return render_template('index.html', error_message="Missing required fields")
 
-    if not organization_account:
-        return render_template('index.html', error_message="Invalid username or password")
+        organization_account = db.session.query(Account).filter_by(
+            **{field: request_form_data[field] for field in required_fields}).first()
 
-    session['organization_id'] = organization_account.organization_id
+        if not organization_account:
+            return render_template('index.html', error_message="Invalid username or password")
 
-    return redirect(url_for('dashboard.dashboard'))
+        session['organization_id'] = organization_account.organization_id
+
+        return redirect(url_for('dashboard.dashboard'))
 
 
 @authentication_bp.route('/create_organization', methods=['GET', 'POST'])

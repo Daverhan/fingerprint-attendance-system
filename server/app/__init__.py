@@ -3,7 +3,6 @@ from flask_session import Session
 import os
 from dotenv import load_dotenv
 from app.utilities.database import db
-from app.routes.index import index_bp
 from app.routes.authentication import authentication_bp
 from app.routes.dashboard import dashboard_bp
 from datetime import timedelta
@@ -25,7 +24,6 @@ def create_app():
     app.config['SESSION_SQLALCHEMY'] = db
     Session(app)
 
-    app.register_blueprint(index_bp)
     app.register_blueprint(authentication_bp)
     app.register_blueprint(dashboard_bp)
 

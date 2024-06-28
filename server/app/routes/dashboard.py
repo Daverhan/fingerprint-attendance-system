@@ -10,7 +10,7 @@ def dashboard():
     organization_id = session.get('organization_id')
 
     if not organization_id:
-        return redirect(url_for('index.index'))
+        return redirect(url_for('authentication.organization_login'))
 
     organization = Organization.query.get_or_404(organization_id)
     events = organization.events.order_by(Event.date.desc()).all()
@@ -23,7 +23,7 @@ def create_event():
     organization_id = session.get('organization_id')
 
     if not organization_id:
-        return redirect(url_for('index.index'))
+        return redirect(url_for('authentication.organization_login'))
 
     organization = Organization.query.get_or_404(organization_id)
 
@@ -53,7 +53,7 @@ def edit_event(id):
     organization_id = session.get('organization_id')
 
     if not organization_id:
-        return redirect(url_for('index.index'))
+        return redirect(url_for('authentication.organization_login'))
 
     organization = Organization.query.get_or_404(organization_id)
     event = Event.query.get_or_404(id)
@@ -74,7 +74,7 @@ def view_event(id):
     organization_id = session.get('organization_id')
 
     if not organization_id:
-        return redirect(url_for('index.index'))
+        return redirect(url_for('authentication.organization_login'))
 
     organization = Organization.query.get_or_404(organization_id)
     event = Event.query.get_or_404(id)
@@ -88,7 +88,7 @@ def delete_event(id):
     organization_id = session.get('organization_id')
 
     if not organization_id:
-        return redirect(url_for('index.index'))
+        return redirect(url_for('authentication.organization_login'))
 
     event = Event.query.filter_by(
         id=id, organization_id=organization_id).first_or_404()
