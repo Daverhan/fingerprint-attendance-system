@@ -1,17 +1,61 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Dashboard
+{{ organization.name }} - Event Dashboard
 {% endblock %}
 
 {% block header %}
-Dashboard
+{% set header_title = "Event Dashboard" %}
+{% include 'navbar.html' %}
 {% endblock %}
 
 {% block content %}
-<section class="flex flex-col items-center">
+<section class="flex flex-col">
     {% if organization %}
-    <h2 class="text-2xl">Logged in as: {{ organization.name }}, {{ organization.id }}</h2>
+    <h2 class="text-3xl text-center m-1">{{ organization.name }}</h2>
     {% endif %}
+    <div class="flex flex-col lg:grid lg:grid-cols-3">
+        {% for event in events %}
+        <div class="grid grid-rows-[60%_40%] h-36 border-2 border-black mx-2 mb-2">
+            <div class="mx-1">
+                <div class="grid grid-cols-2 text-2xl">
+                    <h3 class="font-semibold">{{ event.name }}</h3>
+                    <h3 class="font-semibold text-end">Event Id: {{ event.id }}</h3>
+                </div>
+                <h3 class="text-xl">{{ event.date }}</h3>
+            </div>
+            <div class="grid grid-cols-3 p-0.5 gap-1 items-end">
+                <form action="{{ url_for('dashboard.view_event', id=event.id) }}">
+                    <button
+                        class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow w-full">
+                        View
+                    </button>
+                </form>
+                <form action="{{ url_for('dashboard.edit_event', id=event.id) }}">
+                    <button
+                        class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow w-full">
+                        Edit
+                    </button>
+                </form>
+                <div>
+                    <button onclick="deleteEvent({{event.id}})"
+                        class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow w-full">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </section>
+
+<script>
+    const deleteEvent = async (id) => {
+        const response = await fetch(`/delete_event/${id}`, { method: 'DELETE' })
+
+        if (response.ok) {
+            location.reload();
+        }
+    }
+</script>
 {% endblock %}

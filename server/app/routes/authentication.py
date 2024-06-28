@@ -23,7 +23,7 @@ def organization_login():
 
     session['organization_id'] = organization_account.organization_id
 
-    return redirect(url_for('organization.dashboard', organization_id=organization_account.organization_id))
+    return redirect(url_for('dashboard.dashboard'))
 
 
 @authentication_bp.route('/create_organization', methods=['GET', 'POST'])
@@ -58,12 +58,12 @@ def create_organization():
 
         session['organization_id'] = account.organization_id
 
-        return redirect(url_for('organization.dashboard', organization_id=account.organization_id))
+        return redirect(url_for('dashboard.dashboard'))
 
 
 @authentication_bp.route('/logout')
 def organization_logout():
     session.clear()
-    response = make_response()
+    response = make_response(redirect('/'))
     response.delete_cookie('session')
     return response

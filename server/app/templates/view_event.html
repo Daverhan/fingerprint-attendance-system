@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ organization.name }} - Viewing {{ event.name }}
+{% endblock %}
+
+{% block header %}
+{% set header_title = 'Viewing ' ~ event.name %}
+{% include 'header.html' %}
+{% endblock %}
+
+{% block content %}
+<section class="flex flex-col items-center">
+    <div class="mt-2">
+        {% for attendee in attendees %}
+        <p class="text-xl text-center">{{attendee.first_name}} {{attendee.last_name}}</p>
+        {% endfor %}
+    </div>
+    <form action="{{ url_for('dashboard.dashboard') }}" class="flex mt-4 w-screen justify-center">
+        <button
+            class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow text-xl mx-4 w-96">
+            Go Back
+        </button>
+    </form>
+</section>
+
+{% endblock %}

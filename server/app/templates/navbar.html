@@ -1,0 +1,26 @@
+<nav class="lg:grid lg:grid-cols-[30%_70%] bg-red-300 w-screen">
+    <div class="flex justify-between">
+        <h1 class="text-4xl m-2">{{ header_title }}</h1>
+        <button id="menu-button" class="text-4xl lg:hidden mr-2">☰</button>
+    </div>
+    <div class="hidden lg:flex justify-end items-center gap-20 text-2xl pr-4">
+        <a href="/create_event" class="hover:text-gray-500">Create an Event</a>
+        <a href="/view_members" class="hover:text-gray-500">View Members</a>
+        <a href="/logout" class="hover:text-gray-500">Logout</a>
+    </div>
+    <div id="mobile-menu" class="hidden lg:hidden">
+        <a href="/create_event" class="block p-2 text-2xl hover:bg-red-200">Create an Event</a>
+        <a href="/view_members" class="block p-2 text-2xl hover:bg-red-200">View Members</a>
+        <a href="/logout" class="block p-2 text-2xl hover:bg-red-200">Logout</a>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            menuButton.addEventListener('click', function () {
+                mobileMenu.classList.toggle('hidden');
+            });
+        });
+    </script>
+</nav>

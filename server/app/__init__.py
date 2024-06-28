@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from app.utilities.database import db
 from app.routes.index import index_bp
 from app.routes.authentication import authentication_bp
-from app.routes.organization import organization_bp
+from app.routes.dashboard import dashboard_bp
 from datetime import timedelta
 import app.models.organization
 
@@ -27,7 +27,7 @@ def create_app():
 
     app.register_blueprint(index_bp)
     app.register_blueprint(authentication_bp)
-    app.register_blueprint(organization_bp, url_prefix="/organization")
+    app.register_blueprint(dashboard_bp)
 
     with app.app_context():
         db.create_all()

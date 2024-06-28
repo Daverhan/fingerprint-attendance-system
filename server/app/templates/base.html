@@ -9,11 +9,8 @@
 </head>
 
 <body>
-  <main>
-    <header class="flex bg-red-300 w-screen justify-center">
-      <h1 class="text-4xl m-2">{% block header %}{% endblock %}</h1>
-    </header>
-    {% block content %}{% endblock %}
+  {% block header %}{% endblock %}
+  {% block content %}{% endblock %}
   </main>
 </body>
 

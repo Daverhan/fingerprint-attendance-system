@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ organization.name }} - Editing {{ event.name }}
+{% endblock %}
+
+{% block header %}
+{% set header_title = 'Editing ' ~ event.name %}
+{% include 'header.html' %}
+{% endblock %}
+
+{% block content %}
+<section class="flex flex-col items-center">
+    <form action="{{ url_for('dashboard.edit_event', id=event.id) }}" method="POST"
+        class="flex flex-col text-xl mt-4 items-center w-72">
+        <div>
+            <label class="text-lg" for="name">Event Name:</label>
+            <input value="{{ event.name }}" placeholder="Event Name" type="text" name="name" id="name"
+                autocomplete="name"
+                class="px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:border-transparent w-full" />
+        </div>
+        <button
+            class="mt-4 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow w-full">
+            Save Modifications
+        </button>
+    </form>
+    <form action="{{ url_for('dashboard.dashboard') }}" class="flex mt-10 w-screen justify-center">
+        <button
+            class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow text-xl mx-4 w-96">
+            Cancel
+        </button>
+    </form>
+</section>
+{% endblock %}

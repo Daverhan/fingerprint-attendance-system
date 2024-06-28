@@ -1,4 +1,6 @@
 from app.utilities.database import db
+from datetime import datetime
+from sqlalchemy import DateTime
 
 MAX_FIRST_NAME_LENGTH = 100
 MAX_LAST_NAME_LENGTH = 100
@@ -35,6 +37,7 @@ class Event(db.Model):
     organization_id = db.Column(db.Integer, db.ForeignKey(
         'organization.id'), nullable=False)
     name = db.Column(db.String(MAX_EVENT_NAME), nullable=False)
+    date = db.Column(DateTime, default=datetime.now, nullable=False)
     attendees = db.relationship(
         'Attendee', secondary=event_attendee, backref=db.backref('events', lazy='dynamic'), lazy='dynamic')
 

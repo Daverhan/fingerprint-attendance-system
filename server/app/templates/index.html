@@ -5,7 +5,8 @@ Organization Login
 {% endblock %}
 
 {% block header %}
-Organization Login
+{% set header_title = "Organization Login" %}
+{% include 'header.html' %}
 {% endblock %}
 
 {% block content %}
@@ -24,9 +25,9 @@ Organization Login
             Organization Login
         </button>
     </form>
-    <form action="{{ url_for('authentication.create_organization') }}">
+    <form action="{{ url_for('authentication.create_organization') }}" class="flex mt-10 w-screen justify-center">
         <button
-            class="mt-10 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow text-xl w-96">
+            class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow text-xl mx-4 w-96">
             Create an Organization
         </button>
     </form>
