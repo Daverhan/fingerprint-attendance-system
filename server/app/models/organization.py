@@ -20,6 +20,8 @@ class Organization(db.Model):
         db.String(MAX_ORGANIZATION_NAME), nullable=False)
     account = db.relationship('Account', backref='organization', uselist=False)
     events = db.relationship('Event', backref='organization', lazy='dynamic')
+    members = db.relationship(
+        'Attendee', backref='organization', lazy='dynamic')
 
 
 class Account(db.Model):
@@ -44,5 +46,7 @@ class Event(db.Model):
 
 class Attendee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    organization_id = db.Column(db.Integer, db.ForeignKey(
+        'organization.id'), nullable=False)
     first_name = db.Column(db.String(MAX_FIRST_NAME_LENGTH), nullable=False)
     last_name = db.Column(db.String(MAX_LAST_NAME_LENGTH), nullable=False)

@@ -83,6 +83,19 @@ def view_event(id):
     return render_template('view_event.html', organization=organization, event=event, attendees=attendees)
 
 
+@dashboard_bp.route('/view_members')
+def view_organization_members():
+    organization_id = session.get('organization_id')
+
+    if not organization_id:
+        return redirect(url_for('authentication.organization_login'))
+
+    organization = Organization.query.get_or_404(organization_id)
+    members = organization.members.all()
+
+    return render_template('view_members.html', organization=organization, members=members)
+
+
 @dashboard_bp.route('/delete_event/<int:id>', methods=['DELETE'])
 def delete_event(id):
     organization_id = session.get('organization_id')
