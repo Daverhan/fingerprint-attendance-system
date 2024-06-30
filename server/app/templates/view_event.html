@@ -10,18 +10,32 @@
 {% endblock %}
 
 {% block content %}
-<section class="flex flex-col items-center">
-    <div class="mt-2">
-        {% for attendee in attendees %}
-        <p class="text-xl text-center">{{attendee.first_name}} {{attendee.last_name}}</p>
-        {% endfor %}
-    </div>
-    <form action="{{ url_for('dashboard.dashboard') }}" class="flex mt-4 w-screen justify-center">
-        <button
-            class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow text-xl mx-4 w-96">
-            Go Back
-        </button>
-    </form>
-</section>
+<section class="flex flex-col md:grid md:grid-cols-[20%_60%_20%]">
+    <div></div>
+    <div>
+        <table class="w-full border-2 border-black">
+            <thead>
+                <tr class="bg-green-300 text-xl">
+                    <th class="border border-black p-2">Name</th>
+                    <th class="border border-black p-2">ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for attendee in attendees %}
+                <tr class="hover:bg-green-100">
+                    <td class="border border-black p-2 text-2xl">{{ attendee.first_name }} {{ attendee.last_name }}</td>
+                    <td class="border border-black p-2 text-2xl">{{ attendee.id }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
+        <form action="{{ url_for('dashboard.dashboard') }}" class="text-center mt-4">
+            <button
+                class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow text-xl w-80 md:w-96">
+                Return to Event Dashboard
+            </button>
+        </form>
+    </div>
+</section>
 {% endblock %}
