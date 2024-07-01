@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, session, redirect, url_for
 from app.utilities.database import db
 from app.models.organization import Organization, Event, Attendee
 
@@ -55,3 +55,19 @@ def event_check_in(organization_id, event_id):
     db.session.commit()
 
     return jsonify({'message': 'Check-in successful'})
+
+
+@attendee_management_bp.route('/delete_member/<int:id>', methods=['DELETE'])
+def delete_member(id):
+    organization_id = session.get('organization_id')
+
+    if not organization_id:
+        return redirect(url_for('authentication.organization_login'))
+
+    attendee = Attendee.query.filter_by(
+        id=id, organization_id=organization_id).first_or_404()
+
+    if attendee:
+        db.session.delete(attendee)
+        db.session.commit()
+        return jsonify({'message': 'Member deleted successfully'}), 200
