@@ -48,5 +48,6 @@ class Attendee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     organization_id = db.Column(db.Integer, db.ForeignKey(
         'organization.id'), nullable=False)
+    fingerprint_device_id = db.Column(db.Integer, nullable=False)
     first_name = db.Column(db.String(MAX_FIRST_NAME_LENGTH), nullable=False)
     last_name = db.Column(db.String(MAX_LAST_NAME_LENGTH), nullable=False)

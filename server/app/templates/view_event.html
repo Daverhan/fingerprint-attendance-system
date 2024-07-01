@@ -17,14 +17,14 @@
             <thead>
                 <tr class="bg-green-300 text-xl">
                     <th class="border border-black p-2">Name</th>
-                    <th class="border border-black p-2">ID</th>
+                    <th class="border border-black p-2">Fingerprint Device ID</th>
                 </tr>
             </thead>
             <tbody>
                 {% for attendee in attendees %}
                 <tr class="hover:bg-green-100">
                     <td class="border border-black p-2 text-2xl">{{ attendee.first_name }} {{ attendee.last_name }}</td>
-                    <td class="border border-black p-2 text-2xl">{{ attendee.id }}</td>
+                    <td class="border border-black p-2 text-2xl">{{ attendee.fingerprint_device_id }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
