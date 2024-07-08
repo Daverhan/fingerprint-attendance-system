@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'layouts/base.html' %}
 
 {% block title %}
 {{ organization.name }} - Viewing {{ event.name }}
@@ -6,7 +6,7 @@
 
 {% block header %}
 {% set header_title = 'Viewing ' ~ event.name %}
-{% include 'header.html' %}
+{% include 'components/header.html' %}
 {% endblock %}
 
 {% block content %}
@@ -30,7 +30,7 @@
             </tbody>
         </table>
 
-        <form action="{{ url_for('dashboard.dashboard') }}" class="text-center mt-4">
+        <form action="{{ url_for('events.events') }}" class="text-center mt-4">
             <button
                 class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow text-xl w-80 md:w-96">
                 Return to Event Dashboard

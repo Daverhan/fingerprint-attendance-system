@@ -4,10 +4,11 @@ import os
 from dotenv import load_dotenv
 from app.utilities.database import db
 from app.routes.authentication import authentication_bp
-from app.routes.dashboard import dashboard_bp
-from app.routes.attendee_management import attendee_management_bp
+from app.routes.organizations import organizations_bp
+from app.routes.events import events_bp
+from app.routes.members import members_bp
 from datetime import timedelta
-import app.models.organization
+import app.models.models
 
 
 def create_app():
@@ -26,8 +27,9 @@ def create_app():
     Session(app)
 
     app.register_blueprint(authentication_bp)
-    app.register_blueprint(dashboard_bp)
-    app.register_blueprint(attendee_management_bp)
+    app.register_blueprint(organizations_bp, url_prefix='/organizations')
+    app.register_blueprint(events_bp, url_prefix='/events')
+    app.register_blueprint(members_bp, url_prefix='/members')
 
     with app.app_context():
         db.create_all()

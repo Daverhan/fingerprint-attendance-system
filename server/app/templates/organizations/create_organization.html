@@ -1,12 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'layouts/base.html' %}
 
 {% block title %}
-Organization Login
+Create Organization
 {% endblock %}
 
 {% block header %}
-{% set header_title = "Organization Login" %}
-{% include 'header.html' %}
+{% set header_title = "Create Organization" %}
+{% include 'components/header.html' %}
 {% endblock %}
 
 {% block content %}
@@ -14,21 +14,23 @@ Organization Login
     {% if error_message %}
     <h2 class="mt-4 text-2xl font-semibold text-center">{{ error_message }}</h2>
     {% endif %}
-    <form action="{{ url_for('authentication.organization_login') }}" method="POST"
+    <form action="{{ url_for('organizations.create_organization') }}" method="POST"
         class="flex flex-col text-xl mt-4 items-center w-72">
-        <input placeholder="Username" type="text" name="username" id="username" autocomplete="username"
+        <input placeholder="Organization Name" type="text" name="name" id="name" autocomplete="name"
             class="px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:border-transparent w-full" />
+        <input placeholder="Username" type="text" name="username" id="username" autocomplete="username"
+            class="mt-2 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:border-transparent w-full" />
         <input placeholder="Password" type="password" name="password" id="password"
             class="mt-2 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:border-transparent w-full" />
         <button
             class="mt-4 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow w-full">
-            Organization Login
+            Register Organization
         </button>
     </form>
-    <form action="{{ url_for('authentication.create_organization') }}" class="flex mt-10 w-screen justify-center">
+    <form action="{{ url_for('events.events') }}" class="flex mt-10 w-screen justify-center">
         <button
             class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow text-xl mx-4 w-96">
-            Create an Organization
+            Cancel
         </button>
     </form>
 </section>

@@ -4,14 +4,17 @@
         <button id="menu-button" class="text-4xl lg:hidden mr-2">☰</button>
     </div>
     <div class="hidden lg:flex justify-end items-center gap-20 text-2xl pr-4">
-        <a href="/create_event" class="hover:text-gray-500">Create an Event</a>
-        <a href="/view_members" class="hover:text-gray-500">View Members</a>
-        <a href="/logout" class="hover:text-gray-500">Logout</a>
+        <a href="{{ url_for('events.create_event') }}" class="hover:text-gray-500">Create an Event</a>
+        <a href="{{ url_for('members.members') }}" class="hover:text-gray-500">View Members</a>
+        <a href="{{ url_for('authentication.organization_logout') }}" class="hover:text-gray-500">Logout</a>
     </div>
     <div id="mobile-menu" class="hidden lg:hidden">
-        <a href="/create_event" class="block p-2 text-2xl hover:bg-red-200">Create an Event</a>
-        <a href="/view_members" class="block p-2 text-2xl hover:bg-red-200">View Members</a>
-        <a href="/logout" class="block p-2 text-2xl hover:bg-red-200">Logout</a>
+        <a href="{{ url_for('events.create_event') }}" class="block p-2 text-2xl hover:bg-red-200">Create an
+            Event</a>
+        <a href="{{ url_for('members.members') }}" class="block p-2 text-2xl hover:bg-red-200">View
+            Members</a>
+        <a href="{{ url_for('authentication.organization_logout') }}"
+            class="block p-2 text-2xl hover:bg-red-200">Logout</a>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {

@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'layouts/base.html' %}
 
 {% block title %}
 {{ organization.name }} - Event Dashboard
@@ -6,7 +6,7 @@
 
 {% block header %}
 {% set header_title = "Event Dashboard" %}
-{% include 'navbar.html' %}
+{% include 'components/navbar.html' %}
 {% endblock %}
 
 {% block content %}
@@ -25,13 +25,13 @@
                 <h3 class="text-xl">{{ event.date }}</h3>
             </div>
             <div class="grid grid-cols-3 p-0.5 gap-1 items-end">
-                <form action="{{ url_for('dashboard.view_event', id=event.id) }}">
+                <form action="{{ url_for('events.view_event', id=event.id) }}">
                     <button
                         class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow w-full">
                         View
                     </button>
                 </form>
-                <form action="{{ url_for('dashboard.edit_event', id=event.id) }}">
+                <form action="{{ url_for('events.edit_event', id=event.id) }}">
                     <button
                         class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow w-full">
                         Edit
@@ -51,7 +51,7 @@
 
 <script>
     const deleteEvent = async (id) => {
-        const response = await fetch(`/delete_event/${id}`, { method: 'DELETE' })
+        const response = await fetch(`/events/${id}`, { method: 'DELETE' })
 
         if (response.ok) {
             location.reload();
