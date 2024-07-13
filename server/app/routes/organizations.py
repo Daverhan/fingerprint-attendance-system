@@ -11,7 +11,7 @@ def create_organization():
         return render_template('organizations/create_organization.html')
 
     if request.method == 'POST':
-        organization_required_fields = ['name']
+        organization_required_fields = ['name', 'pin']
         account_required_fields = ['username', 'password']
 
         request_form_data = {field: request.form.get(
@@ -42,18 +42,19 @@ def create_organization():
 
 @organizations_bp.route('/<int:id>/create_member', methods=['POST'])
 def create_member(id):
+    Organization.query.get_or_404(id)
     request_form_data = request.get_json()
 
     required_fields = ['first_name', 'last_name', 'fingerprint_device_id']
 
     if not all(request_form_data.get(field) for field in required_fields):
-        return jsonify({'error': 'Missing required fields'}), 400
+        return 'Missing required fields', 400
 
     member_exists_in_organization = Attendee.query.filter_by(
         fingerprint_device_id=request_form_data['fingerprint_device_id'], organization_id=id).first()
 
     if member_exists_in_organization:
-        return jsonify({'error': 'Fingerprint ID already exists in the hardware device for the provided organization'}), 400
+        return 'Fingerprint ID already exists in the hardware device for the provided organization', 400
 
     attendee = Attendee(
         **{field: request_form_data[field] for field in required_fields}, organization_id=id)
@@ -61,7 +62,7 @@ def create_member(id):
     db.session.add(attendee)
     db.session.commit()
 
-    return jsonify({'message': 'Member successfully registered'}), 200
+    return 'Member successfully registered', 200
 
 
 @organizations_bp.route('/<int:organization_id>/events/<int:event_id>/check-in/<int:fingerprint_device_id>', methods=['POST'])
@@ -70,18 +71,33 @@ def attendee_check_in(organization_id, event_id, fingerprint_device_id):
     event = Event.query.get_or_404(event_id)
 
     if event.organization_id != organization.id:
-        return jsonify({'error': 'The provided event is not associated with the provided organization'}), 400
+        return 'The provided event is not associated with the provided organization', 400
 
     attendee = Attendee.query.filter_by(
         fingerprint_device_id=fingerprint_device_id, organization_id=organization_id).first()
 
     if not attendee:
-        return jsonify({'error': 'The provided Fingerprint ID does not exist in the provided organization'}), 404
+        return 'The provided Fingerprint ID does not exist in the provided organization', 404
 
     if attendee in event.attendees:
-        return jsonify({'error': 'Attendee is already checked into the event'}), 400
+        return 'Attendee is already checked into the event', 400
 
     event.attendees.append(attendee)
     db.session.commit()
 
-    return jsonify({'message': 'Check-in successful'}), 200
+    return 'Check-in successful', 200
+
+
+@organizations_bp.route('/<int:id>/verify-pin', methods=['POST'])
+def verify_pin(id):
+    pin = request.get_json()['pin']
+
+    organization = Organization.query.get_or_404(id)
+
+    if not pin:
+        return 'Missing PIN number in the request', 400
+
+    if organization.pin != pin:
+        return 'Invalid PIN number', 400
+
+    return 'Valid PIN number', 200
