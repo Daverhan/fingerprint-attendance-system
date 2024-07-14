@@ -13,6 +13,7 @@
 <section class="flex flex-col">
     {% if organization %}
     <h2 class="text-3xl text-center m-1">{{ organization.name }}</h2>
+    <h2 class="text-3xl text-center m-1">Organization ID: {{ organization.id }}</h2>
     {% endif %}
     <div class="flex flex-col lg:grid lg:grid-cols-3">
         {% for event in events %}
@@ -20,7 +21,7 @@
             <div class="mx-1">
                 <div class="grid grid-cols-2 text-2xl">
                     <h3 class="font-semibold">{{ event.name }}</h3>
-                    <h3 class="font-semibold text-end">Event Id: {{ event.id }}</h3>
+                    <h3 class="font-semibold text-end">Event ID: {{ event.id }}</h3>
                 </div>
                 <h3 class="text-xl">{{ event.date }}</h3>
             </div>
