@@ -40,6 +40,45 @@ def create_organization():
         return redirect(url_for('events.events'))
 
 
+@organizations_bp.route('/edit', methods=['GET', 'POST'])
+def edit_organization():
+    organization_id = session.get('organization_id')
+
+    if not organization_id:
+        return redirect(url_for('authentication.organization_login'))
+
+    organization = Organization.query.get_or_404(organization_id)
+
+    if request.method == 'GET':
+        return render_template('organizations/edit_organization.html', organization=organization)
+
+    if request.method == 'POST':
+        updatable_organization_fields = ['name', 'pin']
+
+        for field in updatable_organization_fields:
+            if request.form[field]:
+                setattr(organization, field, request.form[field])
+
+        if request.form['username']:
+            organization_account_exists = Account.query.filter_by(
+                username=request.form['username']).first() and organization.account.username != request.form['username']
+
+            if organization_account_exists:
+                return render_template('organizations/edit_organization.html', error_message="An organization already exists with the provided username", organization=organization)
+
+            organization.account.username = request.form['username']
+
+        if request.form['password'] or request.form['password_verify']:
+            if request.form['password'] != request.form['password_verify']:
+                return render_template('organizations/edit_organization.html', error_message="The inputted account password does not match the verified account password", organization=organization)
+
+            organization.account.password = request.form['password']
+
+        db.session.commit()
+
+        return redirect(url_for('events.events'))
+
+
 @organizations_bp.route('/<int:id>/create_member', methods=['POST'])
 def create_member(id):
     Organization.query.get_or_404(id)
