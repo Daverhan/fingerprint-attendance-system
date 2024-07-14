@@ -1,5 +1,6 @@
 from flask import Blueprint, redirect, session, request, render_template, url_for, jsonify
 from app.utilities.database import db
+from app.utilities.bcrypt import bcrypt
 from app.models.models import Organization, Account, Attendee, Event
 
 organizations_bp = Blueprint('organizations', __name__)
@@ -25,6 +26,9 @@ def create_organization():
 
         if organization_account_exists:
             return render_template('organizations/create_organization.html', error_message="An organization already exists with the provided username")
+
+        request_form_data['password'] = bcrypt.generate_password_hash(
+            request_form_data['password'])
 
         organization = Organization(
             **{field: request_form_data[field] for field in organization_required_fields})
